@@ -1,0 +1,35 @@
+#! /bin/bash
+
+export PYTHONPATH=/data/legs/rpete/flight/analysis_functions
+
+pdir=./plots/mkn421_ao21
+mkdir -p $pdir
+
+export PYTHONPATH="$PYTHONPATH:/data/legs/rpete/flight/xcal/src"
+for ((wlo=3; wlo<=18; wlo+=3))
+do
+    (( whi = wlo+3 ))
+
+    noheg=''
+    nomeg=''
+    [ $wlo -ge 9 ] && noheg='--noheg'
+    [ $wlo -ge 18 ] && nomeg='--nomeg'
+
+    for suffix in pdf png
+    do
+        /usr/bin/python3 src/mkn421_plot_fitted_flux_side_by_side.py \
+                /data/legs/rpete/flight/xcal/rdb/acis/mkn421_fits_w${wlo}-${whi}.rdb \
+                /data/legs/rpete/flight/xcal/rdb/qe_N0014_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+                /data/legs/rpete/flight/xcal/rdb/qe_N0015_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+                -o $pdir/mkn421_flux_w${wlo}-${whi}.$suffix \
+                $noheg $nomeg
+
+        /usr/bin/python3 src/mkn421_plot_fitted_flux_side_by_side.py \
+                /data/legs/rpete/flight/xcal/rdb/acis/mkn421_fits_w${wlo}-${whi}.rdb \
+                /data/legs/rpete/flight/xcal/rdb/qe_N0014_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+                /data/legs/rpete/flight/xcal/rdb/qe_N0015_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+		--noerrb \
+                -o $pdir/mkn421_flux_w${wlo}-${whi}_noerrb.$suffix \
+                $noheg $nomeg
+    done
+done

@@ -1,0 +1,12 @@
+#! /bin/bash
+
+scp -p ascda3:/data/letg4/bradw/EEFRACS2013/EEFRAC/LSFPARMstuff/NewOldRatio.out .
+
+mkdir qe
+perl qeN0014.pl
+
+/usr/bin/python plot_N0014_ratio.py
+
+scp -p hrcs_eefrac_ratio_N0004_0003.png ascda3:/data/wdocs/rpete/twiki/hrcs_qe
+
+

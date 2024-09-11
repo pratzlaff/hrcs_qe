@@ -1,0 +1,41 @@
+import argparse
+import astropy.io.fits
+import glob
+import matplotlib.pyplot as plt
+import numpy as np
+
+from matplotlib import rc, rcParams
+#rcParams.update({'font.size': 14})
+
+import hz43
+import util
+
+def main():
+
+    parser = argparse.ArgumentParser(
+        description='Plot observed HRC-S/LETG zeroth-order count rates since 2012',
+    )
+    parser.add_argument('--tg_reprocess', default='tg_reprocess', help='tg_reprocess output directory.')
+    parser.add_argument('-o', '--outfile', help='Output file.')
+    args = parser.parse_args()
+
+    s_obsid, s_year = hz43.obsids_years('HRC-S')
+    ii = s_year > 2012
+    s_rate, s_err = util.zeroth_rates(s_obsid, tg_reprocess=args.tg_reprocess)
+    plt.errorbar(s_year[ii], s_rate[ii], s_err[ii])
+
+    plt.title('HZ 43: HRC-S/LETG Zeroth Order Rates')
+    plt.xlabel('Year')
+    plt.ylabel('Count Rate')
+
+    plt.tight_layout()
+
+    if args.outfile:
+        plt.savefig(args.outfile)
+    else:
+        plt.show()
+
+    plt.close()
+
+if __name__ == '__main__':
+    main()

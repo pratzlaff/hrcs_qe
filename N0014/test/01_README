@@ -1,0 +1,47 @@
+#! /bin/bash
+
+source /data/legs/rpete/flight/analysis_functions/arfs.bash
+
+export ASCDS_OVERRIDE=1
+
+[ `hostname` == 'legs' ] &&
+    source /usr/local/ciao/bin/ciao.sh ||
+    source /soft/ciao/bin/ciao.sh
+
+for v in N0013 N0014
+do
+    qedir=../../$v
+
+    outdir=./garfs/S_qe_$v
+    mkdir -p $outdir
+
+    for obsid in 2584 16375
+    do
+
+	punlearn ardlib
+
+	indir="/data/legs/rpete/flight/xcal_hrcsi/data/hz43/$obsid/tg_reprocess"
+        pha2=$(ls "$indir"/*_pha2.fits)
+
+	qefile=$(match_caldb_file "$pha2" qe "$qedir" "$v")
+	echo $qefile
+
+	pset ardlib AXAF_HRC-S1_QE_FILE="$qefile"'[AXAF_QE1]'
+        pset ardlib AXAF_HRC-S2_QE_FILE="$qefile"'[AXAF_QE2]'
+        pset ardlib AXAF_HRC-S3_QE_FILE="$qefile"'[AXAF_QE3]'
+
+        generate_garfs "$indir" "$outdir"
+
+	punlearn ardlib
+
+    done
+done
+
+export PYTHONPATH=/data/legs/rpete/flight/analysis_functions
+for o in 2584 16375
+do
+    /usr/bin/python response_ratios.py $o -p response_ratios_$o.pdf
+done
+
+
+

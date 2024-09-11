@@ -1,0 +1,5 @@
+#! /bin/bash
+
+v=N0016
+
+perl qe${v}.pl

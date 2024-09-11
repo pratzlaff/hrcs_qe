@@ -1,0 +1,127 @@
+#! /usr/bin/perl -w
+use strict;
+
+=head1 NAME
+
+template - A template for Perl programs.
+
+=head1 SYNOPSIS
+
+cp template newprog
+
+=head1 DESCRIPTION
+
+blah blah blah
+
+=head1 OPTIONS
+
+=over 4
+
+=item --help
+
+Show help and exit.
+
+=item --version
+
+Show version and exit.
+
+=back
+
+=head1 AUTHOR
+
+Pete Ratzlaff E<lt>pratzlaff@cfa.harvard.eduE<gt> December 2011
+
+=head1 SEE ALSO
+
+perl(1).
+
+=cut
+
+my $version = '0.1';
+
+use FindBin;
+use Config;
+use Carp;
+use Astro::FITS::CFITSIO qw( CASEINSEN );
+use Chandra::Tools::Common qw( read_bintbl_cols );
+use File::Copy;
+use PDL;
+use PDL::Graphics::PGPLOT;
+use PDL::IO::Misc;
+use PDL::NiceSlice;
+
+use Getopt::Long;
+my %default_opts = (
+		    infile => 'hrcsD1999-07-22qeN0010.fits',
+		    outfile => 'hrcsD1999-07-22qeN0011.fits',
+		    );
+my %opts = %default_opts;
+GetOptions(\%opts,
+	   'help!', 'version!', 'debug!',
+	   'infile=s', 'outfile=s',
+	   ) or die "Try --help for more information.\n";
+if ($opts{debug}) {
+  $SIG{__WARN__} = \&Carp::cluck;
+  $SIG{__DIE__} = \&Carp::confess;
+}
+$opts{help} and _help();
+$opts{version} and _version();
+
+
+my ($infile, $outfile) = @opts{qw( infile outfile )};
+
+print STDERR "cp $infile -> $outfile\n";
+copy($opts{infile}, $outfile) or die $!;
+
+my $s = 0;
+my $fptr = Astro::FITS::CFITSIO::open_file($outfile, Astro::FITS::CFITSIO::READWRITE(), $s);
+$fptr->write_date($s);
+$fptr->write_chksum($s);
+
+for my $hdrnum (2..4) {
+
+  $fptr->movabs_hdu($hdrnum, Astro::FITS::CFITSIO::BINARY_TBL(), $s);
+
+  my $hdr = $fptr->read_header();
+
+  my ($energy, $qe) = read_bintbl_cols($fptr, qw( energy qe ));
+
+  # get multiplicative factors for QE adjustment
+  my ($e_mult, $qe_mult) = (pdl(0,20), pdl(2,2));
+
+  $qe *= interpol($energy, $e_mult, $qe_mult);
+
+  my $qe_colnum;
+  $fptr->get_colnum(CASEINSEN, 'qe', $qe_colnum, $s);
+  $fptr->write_col(Astro::FITS::CFITSIO::TDOUBLE(), $qe_colnum, 1, 1, $qe->nelem, $qe->double->get_dataref, $s);
+
+  $fptr->write_date($s);
+  $fptr->write_chksum($s);
+
+  check_status($s);
+}
+
+$fptr->close_file($s);
+
+exit 0;
+
+sub _help {
+  exec("$Config{installbin}/perldoc", '-F', $FindBin::Bin . '/' . $FindBin::RealScript);
+}
+
+sub _version {
+  print $version,"\n";
+  exit 0;
+}
+
+sub check_status {
+  my $s = shift;
+  if ($s != 0) {
+    my $txt;
+    Astro::FITS::CFITSIO::fits_get_errstatus($s,$txt);
+    carp "CFITSIO error: $txt";
+    return 0;
+  }
+
+  return 1;
+}

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  <h1>HRC-S QE N0015</h1>
+
+  <p>
+    From regular HRC-S/LETG calibration observations of the hot white
+    dwarf HZ 43<sup><a href="#fn1" id="reffn1">1</a></sup>, it is
+    known that the HRC-S QE has declined steadily at wavelengths
+    longer than 60 &#8491; (200 eV).  This drop has been linear since
+    the high tension voltage change in March, 2012, at a yearly loss
+    rate of 2.39 (&pm; 0.04)&percnt; (more precisely, the QE decline
+    is modeled as linear versus time with a slope of [1-0.0239] units
+    per annum) in dispersed orders (<a href="#fig1"
+    id="reffig1">Fig.&nbsp;1</a>). While in the past decade there have
+    been increasingly large
+    <a href="https://cxc.cfa.harvard.edu/caldb4/downloads/Release_notes/CALDB_v4.9.1.html#TD_HRCS_QEU_N0013">additional
+    position-dependent corrections</a> necessary for the outer plates,
+    broadly speaking the linear QE decline can be characterized as
+    &quot;grey,&quot; i.e., independent of wavelength.
+  </p>
+
+  <p>
+    Despite the lack of a standard candle that illuminates the entire
+    detector, there is still one useful source available for relative
+    calibration of the central plate: the isolated neutron star RX
+    J1856.5-3754. This source, although somewhat faint (&sim;0.11
+    counts s<sup>-1</sup> for positive first order in the 20-60 &#8491
+    band), yields measurable flux for wavelengths longer than 20
+    &#8491; on S2, and has been observed with the HRC-S/LETG
+    configuration in 2001, 2013 and 2019. Comparison of fluxes from
+    those epochs, derived with the current CalDB, which extends the
+    2.39% QE loss per year to all dispersed wavelengths, is consistent
+    with the assumption of grey decline (<a href="#fig2"
+    id="reffig2">Fig.&nbsp;2</a>). The calculated fluxes in both 2013
+    and 2019 are in agreement to the approximately 10&percnt; level
+    with those from 2001.
+  </p>
+
+  <p>
+    For higher energies, we are left with extragalactic sources such
+    as the blazar Markarian 421, which is highly variable, displaying
+    variations of &gt;50&percnt; over timescales of 10s of ksec. For
+    the purpose of cross calibration, it is often observed in a
+    sequence of consecutive interleaved instrument/grating (ACIS-S
+    with HETGS and LETGS, HRC-S with LETGS) configurations.  We then
+    model the flux light curve as a continuous auto-regressive model
+    (CARMA&semi; Kelly et
+    al. <a href="https://ui.adsabs.harvard.edu/abs/2014ApJ...788...33K/abstract">2014</a>),
+    adjusting the relative QE calibration of HRC-S to ensure the
+    smoothest curve through the instrument changes to and from
+    ACIS-S. Examples of these interleaved observations are shown in
+    <a href="#fig3" id="reffig3">Fig.&nbsp;3</a>, for the past three
+    years, in the 3-6 &#8491; band. The left side panels show flux
+    curves in the years 2017-2019, using the current CalDB HRC-S QE
+    version N0014. As can be seen in the lower left plot, the
+    discontinuity between HRC-S/LETG (blue) and ACIS-S/LETG (black)
+    has become especially pronounced in recent years. <a href="#fig4"
+    id="reffig4">Figs.&nbsp;4-7</a> show similar trends for other
+    wavelength bands, going out to 18 &#8491;.
+  </p>
+
+  <p>
+    Calibrating the HRC-S to ACIS-S via Mkn 421 while assuming the
+    ACIS-S QE remains constant requires, at the shortest wavelengths,
+    raising the HRC-S QE increasingly over time.  Though these data
+    are at low signal-to-noise, some trends in the required QE
+    correction are apparent.  The discrepancy between ACIS-S and HRC-S
+    is roughly correlated with wavelength: shorter wavelengths require
+    more modification. Similarly, the disagreement between detectors
+    is generally growing over time, and this appears to have begun
+    around the same time as the HV change in 2012.
+  </p>
+
+  <p>
+    We address the flux discrepancy by <b>raising the HRC-S QE
+    relative to the grey correction the most at shortest wavelengths,
+    linearly ramping down that excess correction to unity (i.e., no
+    additional correction beyond the grey secular one) at 20
+    &#8491;</b>. Additionally, <b>the QE will be linearly increased
+    over time, post HV change</b>, in order to compensate for the grey
+    secular correction (<a href="#fig8" id="reffig8">Fig.&nbsp;8</a>).
+  </p>
+
+  <p>
+    Beginning in 2013, QE N0015 contains one calibration file per
+    year. At the shortest wavelength (0 &#8491;), the QE in S2 rises
+    at the rate of 2.1&percnt; per year (a linear increase versus time
+    with a slope of 1.021 units per year relative to 2012.5), which
+    was the value found to most closely match the factor which must be
+    applied to the highest energy HRC-S fluxes so that they agree with
+    ACIS-S. This upwards correction shorter than 20 &#8491; on S2 is
+    counter to the grey decline implemented in the QEU.  Together, the
+    QEU correction and new QE counter-correction amount to a net
+    &quot;real&quot; decline in HRC-S QE of 0.34&percnt; per year at
+    the highest energies. This wavelength-dependent correction of the
+    HRC-S QE, in addition to linearly ramping up with time, also
+    linearly ramps down with wavelength until it is zeroed out
+    relative to the grey correction at 20 &#8491;.
+  </p>
+
+  <p>
+    The right side panels in <a href="#fig4"
+    id="reffig4">Figs.&nbsp;4-7</a> show how the HRC-S fluxes change
+    with this QE update. They are generally in better agreement with
+    ACIS-S, although the 6-9 &#8491 and 12-15 &#8491; bands still
+    require additional scrutiny, particularly in the latest 2019
+    observations. The upcoming interleaved calibration observations in
+    July, 2020 will shine further light on the situation.
+  </p>
+
+  <p>
+    The plerionic supernova remnant G21.5-0.9 can provide a
+    consistency check on our corrections. The plerion has a
+    highly-absorbed spectrum, with X-ray emission almost entirely at
+    energies greater than 1 keV (<a href="#fig9"
+    id="reffig9">Fig.&nbsp;9</a>). As shown in <a href="#fig10"
+    id="reffig10">Fig.&nbsp;10</a>, the latest HRC-S imaging plerion
+    flux measurements using QE N0015 more closely match historical
+    values than did those computed from the N0014 version.
+  </p>
+    
+  <hr>
+
+  <p>
+  <sup id="fn1">1.
+    All data reprocessing and response generation for
+    this analysis were done using CIAO 4.10 and CalDB 4.9.0, or later.
+    <a href="#reffn1" title="Return to text.">&#8617;</a>
+  </sup>
+  </p>
+  <hr><hr>
+
+  <figure id="fig1">
+    <a href="plots/01-hz43_s_rates.pdf">
+      <img src="plots/01-hz43_s_rates.png" alt="HZ 43 rates observed
+      by HRC-S/LETG since 2012."/>
+    </a>
+    <figcaption>
+      <b>Figure 1.</b>
+      <i>
+	Observed HRC-S/LETG HZ 43 count rates (relative to the
+	interpolated rate at year 2012.5) since the HV change in 2012,
+	for both zeroth and dispersed orders. Estimates of higher
+	order counts have been subtracted from the dispersed orders,
+	based on the HZ 43 white dwarf spectral model. Error bars
+	represent the 1&sigma; confidence level. A simple linear fit
+	indicates a 2.56&percnt; per year QE decline for zeroth order,
+	and 2.39&percnt; per year for the combined dispersed orders.
+      </i><a href="#reffig1" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+  
+  <hr>
+
+  <figure id="fig2">
+    <a href="plots/02-rxj1856_hrcs_ratios.pdf">
+      <img src="plots/02-rxj1856_hrcs_ratios.png" alt="RX J1856.5-3754
+      fluxes in 2013 and 2019, relative to 2001." />
+    </a>
+    <figcaption>
+      <b>Figure 2.</b>
+      <i>
+	RX J1856.5-3754 HRC-S/LETG S2 flux ratios in 2013 (121 ksec)
+	and 2019 (166 ksec), relative to 2001 (441 ksec). Red and
+	black points are negative and positive first orders,
+	respectively. Higher order contributions have been subtracted,
+	based on the spectral fit of an absorbed blackbody.
+      </i><a href="#reffig2" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+  <hr>
+  
+  <figure id="fig3">
+    <a href="plots/03_mkn421_flux_w3-6.pdf">
+      <img src="plots/03_mkn421_flux_w3-6.png"
+      alt="Mkn 421 interleaved light curve, 3-6 &#8491;." />
+    </a>
+    <figcaption><b>Figure 3.</b>
+      <i>
+	Interleaved Mkn 421 flux light curves for recent years in the
+	3-6 &#8491; band, with instrument configurations alternating
+	between ACIS-S/HETG (red, magenta), ACIS-S/LETG (black) and
+	HRC-S/LETG (blue). Positive orders are upright triangle
+	symbols with solid error bars, and negative are down-turned
+	triangle symbols with dotted error bars. The left side panels
+	are fluxes computed using the current HRC-S QE version
+	N0014. Right side panels are calculated with the updated N0015
+	QE. Each observation is binned into 2 ksec intervals, and an
+	absorbed power-law is fit to events in that time bin for the
+	3-6 &#8491; wavelength range. Error bars represent the
+	1&sigma; confidence interval from 1000 samples taken by
+	Sherpa&apos;s <tt>sample_flux</tt> routine.
+      </i><a href="#reffig3" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+  <hr>
+
+  <figure id="fig4">
+    <a href="plots/03_mkn421_flux_w6-9.pdf">
+      <img src="plots/03_mkn421_flux_w6-9.png"
+      alt="Mkn 421 interleaved light curve, 6-9 &#8491;." />
+    </a>
+    <figcaption><b>Figure 4.</b>
+      <i>
+	Same as <a href="#fig3">Figure&nbsp;3</a>, for the 6-9 &#8491;
+	band.
+      </i><a href="#reffig4" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+  <hr>
+
+  <figure id="fig5">
+    <a href="plots/03_mkn421_flux_w9-12.pdf">
+      <img src="plots/03_mkn421_flux_w9-12.png"
+      alt="Mkn 421 interleaved light curve, 9-12 &#8491;." />
+    </a>
+    <figcaption><b>Figure 5.</b>
+      <i>
+	Same as <a href="#fig3">Figure&nbsp;3</a>, for the 9-12
+	&#8491; band.
+      </i><a href="#reffig4" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+  <hr>
+
+  <figure id="fig6">
+    <a href="plots/03_mkn421_flux_w12-15.pdf">
+      <img src="plots/03_mkn421_flux_w12-15.png"
+      alt="Mkn 421 interleaved light curve, 12-15 &#8491;." />
+    </a>
+    <figcaption><b>Figure 6.</b>
+      <i>
+	Same as <a href="#fig3">Figure&nbsp;3</a>, for the 12-15
+	&#8491; band.
+      </i><a href="#reffig4" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+  <hr>
+
+  <figure id="fig7">
+    <a href="plots/03_mkn421_flux_w15-18.pdf">
+      <img src="plots/03_mkn421_flux_w15-18.png"
+      alt="Mkn 421 interleaved light curve, 15-18 &#8491;." />
+    </a>
+    <figcaption><b>Figure 7.</b>
+      <i>
+	Same as <a href="#fig3">Figure&nbsp;3</a>, for the 15-18
+	&#8491; band.
+      </i><a href="#reffig4" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+  <hr>
+
+  <figure id="fig8">
+    <a href="plots/04-hrcs_short_corr.pdf">
+      <img src="plots/04-hrcs_short_corr.png"
+      alt="QE correction" />
+    </a>
+    <figcaption>
+      <b>Figure 8.</b>
+      <i>
+	For various epochs, the HRC-S S2 QE wavelength-dependent
+	correction. This is the factor which is multiplied by the
+	N0014 QE in order to create the new N0015 version.  For years
+	prior to 2013 or wavelengths longer than 20 &#8491;, there is
+	no change.  The corrective raise of 2.1&percnt; per year since
+	2012.5 is largest at 0 &#8491;, and as a function of
+	wavelength linearly ramps back to unity at 20 &#8491.
+      </i><a href="#reffig8" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+  <hr>
+
+  <figure id="fig9">
+    <a href="plots/05-g21.5-0.9_spectrum.pdf">
+      <img src="plots/05-g21.5-0.9_spectrum.png"
+      alt="G21.5-0.9 spectrum" />
+    </a>
+    <figcaption>
+      <b>Figure 9.</b>
+      <i>
+	G21.5-0.9 plerion spectral model used by <tt>srcflux</tt>: an
+	absorbed power-law with N<sub>H</sub>&nbsp;=&nbsp;3.2 &times; 10<sup>22</sup>
+	cm<sup>-2</sup> and photon index &Gamma;&nbsp;=&nbsp;1.8.
+      </i><a href="#reffig9" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+  <hr>
+
+  <figure id="fig10">
+    <a href="plots/06-g21.5-0.9.pdf">
+      <img src="plots/06-g21.5-0.9.png" alt="G21.5-0.9 light curve" />
+    </a>
+    <figcaption>
+      <b>Figure 10.</b>
+      <i>
+	G21.5-0.9 plerion (40&quot; radius) HRC-S imaging light curve
+	computed with <tt>srcflux</tt>. Blue points are derived with
+	QE version N0014, while orange are calculated using the
+	updated N0015 version. Error bars represent the 90% confidence
+	interval. The black dashed lines represent the mean
+	(horizontal) and 1&sigma; confidence level (vertical), for
+	fluxes prior to 2010.
+      </i><a href="#reffig10" title="Return to text.">&#8617;</a>
+    </figcaption>
+  </figure>
+
+</body>
+</html>

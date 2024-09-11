@@ -1,0 +1,73 @@
+#! /bin/bash
+
+export PYTHONPATH=/data/legs/rpete/flight/analysis_functions
+
+mkdir -p plots
+
+export ARFPATH=/data/legs/rpete/flight/qeu/ARD/v14/arfs/S_qeu_N0014:/data/legs/rpete/flight/xcal_hrcsi/arfs/I_qe_N0011
+export RMFPATH=/data/legs/rpete/flight/rmfs
+/usr/bin/python3 ./src/hz43_s_rates.py -o plots/01-hz43_s_rates.pdf 
+/usr/bin/python3 ./src/hz43_s_rates.py -o plots/01-hz43_s_rates.png
+
+export PYTHONPATH="$PYTHONPATH:/data/legs/rpete/flight/rxj1856.5-3754/src"
+
+/usr/bin/python3 src/rxj1856_hrcs_ratios.py -o plots/02-rxj1856_hrcs_ratios.pdf
+/usr/bin/python3 src/rxj1856_hrcs_ratios.py -o plots/02-rxj1856_hrcs_ratios.png
+
+/usr/bin/python3 src/plot_hrcs_short_corr.py -o plots/04-hrcs_short_corr.png
+/usr/bin/python3 src/plot_hrcs_short_corr.py -o plots/04-hrcs_short_corr.pdf
+
+cp -a /data/legs/rpete/flight/g21.5-0.9/model/spectrum_plerion.png plots/05-g21.5-0.9_spectrum.png
+cp -a /data/legs/rpete/flight/g21.5-0.9/model/spectrum_plerion.pdf plots/05-g21.5-0.9_spectrum.pdf
+
+/usr/bin/python3 src/g21.5_plot_fluxes.py -o plots/06-g21.5-0.9.pdf
+/usr/bin/python3 src/g21.5_plot_fluxes.py -o plots/06-g21.5-0.9.png
+
+export PYTHONPATH="$PYTHONPATH:/data/legs/rpete/flight/xcal/src"
+for ((wlo=3; wlo<=18; wlo+=3))
+do
+    (( whi = wlo+3 ))
+
+    noheg=''
+    nomeg=''
+    [ $wlo -ge 9 ] && noheg='--noheg'
+    [ $wlo -ge 18 ] && nomeg='--nomeg'
+
+    for suffix in pdf png
+    do
+        /usr/bin/python3 src/mkn421_plot_fitted_flux_side_by_side.py \
+                /data/legs/rpete/flight/xcal/rdb/acis/mkn421_fits_w${wlo}-${whi}.rdb \
+                /data/legs/rpete/flight/xcal/rdb/qe_N0014_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+                /data/legs/rpete/flight/xcal/rdb/qe_N0015_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+                -o plots/03_mkn421_flux_w${wlo}-${whi}.$suffix \
+                $noheg $nomeg
+
+        /usr/bin/python3 src/mkn421_plot_fitted_flux_side_by_side.py \
+                /data/legs/rpete/flight/xcal/rdb/acis/mkn421_fits_w${wlo}-${whi}.rdb \
+                /data/legs/rpete/flight/xcal/rdb/qe_N0014_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+                /data/legs/rpete/flight/xcal/rdb/qe_N0015_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+		--noerrb \
+                -o plots/03_mkn421_flux_w${wlo}-${whi}_noerrb.$suffix \
+                $noheg $nomeg
+    done
+    
+    # for qe in N0014 N0015
+    # do
+    #     for suffix in pdf png
+    #     do
+    #         /usr/bin/python3 src/mkn421_plot_fitted_flux.py \
+    #             /data/legs/rpete/flight/xcal/rdb/acis/mkn421_fits_w${wlo}-${whi}.rdb \
+    #             /data/legs/rpete/flight/xcal/rdb/qe_${qe}_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+    #             -o plots/05_mkn421_flux_qe_${qe}_w${wlo}_${whi}.$suffix \
+    #             -c $qe \
+    #             $noheg $nomeg
+    #         /usr/bin/python3 src/mkn421_plot_fitted_flux.py \
+    #             /data/legs/rpete/flight/xcal/rdb/acis/mkn421_fits_w${wlo}-${whi}.rdb \
+    #             /data/legs/rpete/flight/xcal/rdb/qe_${qe}_qeu_N0013/mkn421_fits_w${wlo}-${whi}.rdb \
+    #             -o plots/05_mkn421_flux_qe_${qe}_w${wlo}_${whi}_noerrb.$suffix \
+    #             --noerrb -c $qe \
+    #             $noheg $nomeg
+    #     done
+    # done
+done
+#rename -f s/05/03/ plots/05*qe_N0014*

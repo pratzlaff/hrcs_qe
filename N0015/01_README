@@ -1,0 +1,12 @@
+#! /bin/bash
+
+v=N0015
+
+perl qe${v}.pl
+
+cd ECR
+/bin/bash 01_README
+cd ..
+
+ssh ascda3 mkdir -p /data/wdocs/rpete/twiki/hrcs_qe/$v/ECR
+scp -pr ECR/plots ECR/index.html ascda3:/data/wdocs/rpete/twiki/hrcs_qe/$v/ECR
