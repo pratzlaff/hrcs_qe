@@ -193,7 +193,7 @@ sub mod_N0016_hv3_update {
   $qe *= 1.08;
 }
 
-my @cvsd = qw/ 1999-07-22 2012-03-29 2021-05-14 2024-09-13 /;
+my @cvsd = qw/ 1999-07-22 2012-03-29 2021-05-14 2024-09-20 /;
 
 for my $j (0..$#cvsd) {
 
@@ -226,7 +226,7 @@ for my $j (0..$#cvsd) {
     mod_N0013_hi_e_corr($wav, $qe);
     mod_N0014_lsfparm_update($wav, $qe);
     mod_N0016_hv2_update($qe) if $cvsd ge '2021-05-14';
-    mod_N0016_hv3_update($qe) if $cvsd ge '2024-09-13';
+    mod_N0016_hv3_update($qe) if $cvsd ge '2024-09-20';
 
     my $qe_colnum;
     $fptr->get_colnum(CASEINSEN, 'qe', $qe_colnum, $s);
